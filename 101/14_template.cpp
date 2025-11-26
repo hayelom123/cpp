@@ -27,6 +27,7 @@ class Box {
     void display(){
         cout<<"value: "<<value<<endl;
     }
+    
     T getValue() {
         return value;
     }
