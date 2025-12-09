@@ -2,6 +2,17 @@
 #include <string>
 using namespace std;
 
+// the difference between a class and a struct is that members of a class are private by default, while members of a struct are public by default
+// friend functions can access private members of a class or struct
+// friend class can access private members of another class
+// operator overloading allows us to define how operators work with user-defined types (classes or structs)
+// it can make code more readable and intuitive, but it should be used judiciously to avoid confusion
+// operator overloading is done by defining a function with the keyword 'operator' followed by the operator symbol
+// the function can be a member function or a non-member function (friend function)
+// non-member functions are often used for binary operators (operators that take two operands) to allow for commutative operations
+// member functions are often used for unary operators (operators that take one operand) or when the left operand is an instance of the class
+// operator overloading can be done for most operators, but not all (e.g., we cannot overload the scope resolution operator (::), sizeof operator, or member access operator (.))
+
 class Vector
 {
     int x;

@@ -7,6 +7,18 @@ void passByRef(int &ref);
 void passByPtr(int *ptr);
 
 // the Difference Between Pass By Pointer and Pass By Pointer Reference (int * and int * &) C++
+
+// Pass by pointer allows modifying the value at the address the pointer points to
+// but does not allow changing the pointer itself to point to a different address
+// This is useful when you want to modify the value of a variable
+// without changing what the pointer points to
+// Example:
+//     void modifyByPointer(int * ptr)
+//     {
+//         if (ptr != nullptr)
+//         {
+//             *ptr += 5; // Modify the value pointed to by ptr
+//         }
 void modifyByPointer(int *ptr)
 {
     if (ptr != nullptr)
@@ -14,11 +26,34 @@ void modifyByPointer(int *ptr)
         *ptr += 5; // Modify the value pointed to by ptr
     }
 }
+
+// Pass by pointer reference allows modifying the caller's pointer itself
+// so that it can point to a different address
+// This is useful when you want to change what the pointer points to
+// For example, allocating new memory and updating the caller's pointer
+// or making it point to a different existing variable
+// instead of just modifying the value at the original address
+// This is done by passing a reference to the pointer (int *& ptrRef)
+// which allows the function to reassign the caller's pointer
+// to point to a different address
+// This is different from just passing a pointer (int * ptr)
+// where only the value at the address can be modified
+// but the pointer itself cannot be changed to point elsewhere
+// Example:
+// void modifyByPointerReference(int *& ptrRef)
+// {
+//     static int newValue = 50; // Static to ensure it remains valid after function ends
+//     ptrRef = &newValue;       // Reassign ptrRef to point to a new value
+// }
 void modifyByPointerRef(int *&ptrRef)
 {
     static int newValue = 50; // Static to ensure it remains valid after function ends
     ptrRef = &newValue;       // Reassign ptrRef to point to a new value
 }
+
+// double pointer (int ** pp) is a pointer that points to another pointer
+// it is used when you need to modify the pointer itself in the caller function
+// or when dealing with arrays of pointers
 
 int main()
 {
