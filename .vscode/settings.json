@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "*.gradle": "java",
+    "__config": "cpp",
+    "iostream": "cpp",
+    "ostream": "cpp"
+  }
+}
