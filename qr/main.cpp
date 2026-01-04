@@ -17,55 +17,20 @@ int main()
         "FN:Hikma Dawud\n"
         "ORG:Hikma Beauty salon\n"
         "TITLE:Nail stylist\n"
-        "TEL;TYPE=CELL:+251926962911\n"
-        "TEL;TYPE=WORK,VOICE:+251926962915\n"
-        "EMAIL:hikma@example.com\n"
+        "TEL;TYPE=CELL:+251926962915\n"
+        "TEL;TYPE=WORK,VOICE:+251977058512\n"
+        "EMAIL:hikmadawudyenus@gmail.com\n"
         "URL;TYPE=TikTok:https://www.tiktok.com/@hikma_beauty\n"
         "URL;TYPE=WhatsApp:https://wa.me/251926962915\n" // Opens chat directly (use your WhatsApp number)
         "URL;TYPE=Telegram:https://t.me/hikma_beauty\n"  // Opens profile/chat directly
+        "URL;TYPE=Instagram:https://www.instagram.com/hikma_beauty_ig\n"
         "X-SOCIALPROFILE;TYPE=tiktok:https://www.tiktok.com/@hikma_beauty\n"
         "X-SOCIALPROFILE;TYPE=whatsapp:https://wa.me/251926962915\n"
         "X-SOCIALPROFILE;TYPE=telegram:https://t.me/hikma_beauty\n"
-        "PHOTO;VALUE=uri:https://example.com/profile.jpg\n"
+        "X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/hikma_beauty_ig\n"
+        "PHOTO;VALUE=uri:https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/72684ce0c9270dc1abf12d6b5b3eb0d5~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=f7dffeaf&x-expires=1767729600&x-signature=po%2BJyA25aEuM3nxsn9EEJ%2B86j4k%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=my\n"
         "NOTE:Tap links for TikTok, WhatsApp & Telegram\n"
         "END:VCARD";
-
-    // std::string vcard =
-    //     "BEGIN:VCARD\n"
-    //     "VERSION:3.0\n"
-    //     "N:Dawud;Hikma;;;\n"
-    //     "FN:Hikma Dawud\n"
-    //     "ORG:Hikma Beauty salon\n"
-    //     "TITLE:Nail stylist\n"
-    //     "TEL;TYPE=CELL:+251926962911\n"
-    //     "TEL;TYPE=WORK,VOICE:+251926962915\n"
-    //     "EMAIL:hikma@example.com\n"
-    //     "URL:https://www.tiktok.com/@hikma_beauty\n"
-    //     "X-SOCIALPROFILE;TYPE=whatsapp:+251926962915\n"
-    //     "X-SOCIALPROFILE;TYPE=telegram:@hikma_beauty\n"
-    //     "PHOTO;VALUE=uri:https://example.com/profile.jpg\n"
-    //     "NOTE:TikTok Creator, WhatsApp & Telegram included\n"
-    //     "END:VCARD";
-
-    // std::string vcard =
-    //     "BEGIN:VCARD\n"
-    //     "VERSION:3.0\n"
-    //     "N:Dawud;Hikma;;;\n"
-    //     "FN:Hikma Dawud\n"
-    //     "TEL;TYPE=CELL:+251926962915\n"
-    //     "EMAIL:hayelom@example.com\n"
-    //     "URL:https://www.tiktok.com/@hikma_beauty\n"
-    //     "END:VCARD";
-
-    // std::string vcard =
-    //     "BEGIN:VCARD\n"
-    //     "VERSION:3.0\n"
-    //     "N:Kiros;Hayelom;;;\n"
-    //     "FN:Hayelom Kiros\n"
-    //     "ORG:Software Engineer\n"
-    //     "TEL;TYPE=CELL:+251926962915\n"
-    //     "EMAIL:hayelom@example.com\n"
-    //     "END:VCARD";
 
     QrCode qr = QrCode::encodeText(vcard.c_str(), QrCode::Ecc::LOW);
 

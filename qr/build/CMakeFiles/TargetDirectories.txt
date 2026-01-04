@@ -1,0 +1,3 @@
+/Users/hayelomkiros/Desktop/c++/cpp/qr/build/CMakeFiles/qr.dir
+/Users/hayelomkiros/Desktop/c++/cpp/qr/build/CMakeFiles/edit_cache.dir
+/Users/hayelomkiros/Desktop/c++/cpp/qr/build/CMakeFiles/rebuild_cache.dir
