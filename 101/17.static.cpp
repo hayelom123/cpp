@@ -1,5 +1,7 @@
 
 
+// static definition in C++
+
 // there are 2 types of static
 // 1. internal static
 // 2. external static
