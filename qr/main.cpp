@@ -35,7 +35,7 @@ int main()
     QrCode qr = QrCode::encodeText(vcard.c_str(), QrCode::Ecc::LOW);
 
     const int scale = 10;
-    const int border = 8;
+    const int border = 12;
     const int size = (qr.getSize() + border * 2) * scale;
 
     std::vector<unsigned char> image(size * size * 3, 255);
