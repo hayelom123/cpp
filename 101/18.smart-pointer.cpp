@@ -40,5 +40,25 @@ int main()
     } // ptr2 goes out of scope here
     cout << "shared_ptr has been deallocated." << endl;
 
+    // weak_ptr example
+    {
+        cout << "weak_ptr example:" << endl;
+        shared_ptr<int> ptr4(new int(200)); // create a shared_ptr that owns an integer
+        weak_ptr<int> wptr = ptr4;          // create a weak_ptr that references the shared_ptr
+
+        cout << "Value from shared_ptr: " << *ptr4 << endl;
+        cout << "Reference count: " << ptr4.use_count() << endl; // show reference count
+
+        if (auto sptr = wptr.lock()) // attempt to get a shared_ptr from weak_ptr
+        {
+            cout << "Value from weak_ptr: " << *sptr << endl;
+        }
+        else
+        {
+            cout << "The object has been deallocated." << endl;
+        }
+    } // ptr4 goes out of scope here
+    cout << "weak_ptr example completed." << endl;
+
     return 0;
 }
