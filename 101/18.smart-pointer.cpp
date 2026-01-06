@@ -26,6 +26,19 @@ int main()
         // unique_ptr automatically deallocates the memory when it goes out of scope
     } // ptr1 goes out of scope here
     cout << "unique_ptr has been deallocated." << endl;
+    // shared_ptr example
+    {
+        cout << "shared_ptr example:" << endl;
+        shared_ptr<int> ptr2(new int(100)); // create a shared_ptr that owns an integer
+        {
+            shared_ptr<int> ptr3 = ptr2; // create another shared_ptr that shares ownership
+            cout << "Value from ptr2: " << *ptr2 << endl;
+            cout << "Value from ptr3: " << *ptr3 << endl;
+            cout << "Reference count: " << ptr2.use_count() << endl; // show reference count
+        } // ptr3 goes out of scope here
+        cout << "Reference count after ptr3 goes out of scope: " << ptr2.use_count() << endl;
+    } // ptr2 goes out of scope here
+    cout << "shared_ptr has been deallocated." << endl;
 
     return 0;
 }
