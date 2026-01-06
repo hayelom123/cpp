@@ -60,5 +60,10 @@ int main()
     } // ptr4 goes out of scope here
     cout << "weak_ptr example completed." << endl;
 
+    // smart pointers provide automatic memory management and help prevent memory leaks and dangling pointers in C++
+    // they are an essential tool for modern C++ programming and should be used whenever dynamic memory allocation is required.
+    // by using smart pointers, developers can write safer and more maintainable code.
+    // end of smart pointer example
+
     return 0;
 }
