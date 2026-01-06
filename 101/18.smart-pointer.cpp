@@ -18,5 +18,14 @@ int main()
     // they provide a safer and more convenient way to handle dynamic memory in C++ compared to raw pointers.
     // example of smart pointer usage in C++
 
+    // unique_ptr example
+    {
+        cout << "unique_ptr example:" << endl;
+        unique_ptr<int> ptr1(new int(42));  // create a unique_ptr that owns an integer
+        cout << "Value: " << *ptr1 << endl; // access the value
+        // unique_ptr automatically deallocates the memory when it goes out of scope
+    } // ptr1 goes out of scope here
+    cout << "unique_ptr has been deallocated." << endl;
+
     return 0;
 }
