@@ -27,6 +27,7 @@ int main()
     nameKassa("Kassa");
     CallName callDavid = helloName;
     callDavid("David");
+    callDavid("Loves");
 
     return 0;
 }
