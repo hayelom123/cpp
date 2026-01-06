@@ -20,5 +20,13 @@ int main()
 
     void (*helloHayelom)(std::string name) = helloName;
     helloHayelom("Hayelom Kiros");
+
+    // use it with typdef
+    typedef void (*CallName)(std::string);
+    CallName nameKassa = helloName;
+    nameKassa("Kassa");
+    CallName callDavid = helloName;
+    callDavid("David");
+
     return 0;
 }
