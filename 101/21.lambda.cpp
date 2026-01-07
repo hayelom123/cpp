@@ -32,7 +32,18 @@ int main()
         b++;
         std::cout << "SUM:" << a + b << std::endl;
     };
+
     sum();
 
+    // if you pass it by value it is not mutable
+    // inorder to take make it mutable  add mutable
+
+    auto multiply = [a, b]() mutable
+    {
+        a += 8; // without mutable key it won't work
+        b += 6;
+        std::cout << "Multiply: " << a * b << std::endl;
+    };
+    multiply();
     forEach(values, lambda);
 }
