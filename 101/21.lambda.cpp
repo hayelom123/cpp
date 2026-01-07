@@ -15,6 +15,8 @@ int main()
 
     std::vector<int> values = {1, 5, 6, 8};
 
-    forEach(values, [](int value)
-            { std::cout << "Value:" << value << std::endl; });
+    auto lambda = [](int value)
+    { std::cout << "Value:" << value << std::endl; };
+
+    forEach(values, lambda);
 }
