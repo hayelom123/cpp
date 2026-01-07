@@ -14,13 +14,25 @@ int main()
     // it was started in c++ 11
     // Constructs a closure (an unnamed function object capable of capturing variables in scope).
     //[captures] front-attr(optional) specs except (optional)  back - attr (optional)trailing (optional)contract - specs ﻿(optional){body}
-
+    /*
+    [capture](parameters) -> return_type {
+        body
+    };
+     */
     std::vector<int>
         values = {1, 5, 6, 8};
 
     auto lambda = [](int value)
     { std::cout << "Value:" << value << std::endl; };
     //
+    int a = 3, b = 4;
+    auto sum = [&a, &b]()
+    {
+        a++;
+        b++;
+        std::cout << "SUM:" << a + b << std::endl;
+    };
+    sum();
 
     forEach(values, lambda);
 }
