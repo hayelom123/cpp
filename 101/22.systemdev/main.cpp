@@ -2,5 +2,9 @@
 
 int main()
 {
-    std::cout << "Hello God please help me!!!" << std::endl;
+    // fatures
+    //  1. register users
+    //  2.login
+    //  3.diplay profile
+    //  4.edit profile
 }
