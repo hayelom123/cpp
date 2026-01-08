@@ -17,6 +17,7 @@ private:
 
     std::string encryptPassword(std::string pass)
     {
+        return pass;
     }
 
 public:
