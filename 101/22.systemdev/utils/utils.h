@@ -15,4 +15,10 @@ void clearScreen()
     std::system("clear");
 #endif
 }
+void waitForKey()
+{
+    std::cout << "Press Enter to continue...";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.get();
+}
 #endif

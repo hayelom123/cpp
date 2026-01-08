@@ -41,7 +41,7 @@ UserModel registerUser()
     std::cout << "====================User Registration System====================" << std::endl;
 
     std::string name, email, password;
-
+    std::getchar();
     std::cout << "Name: ";
     std::getline(std::cin, name);
 
