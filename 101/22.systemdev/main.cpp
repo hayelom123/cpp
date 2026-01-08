@@ -27,12 +27,15 @@ void menu()
 {
 
     clearScreen();
+    std::cout << "\033[0m"; // reset to default
+
     std::cout << "\033[" << 36 << "m";
     header();
     std::cout << "1.Login" << std::endl;
     std::cout << "2.Register" << std::endl;
     std::cout << "3.Display Users" << std::endl;
     std::cout << "4.Search User" << std::endl;
+    std::cout << "5.To EXIT" << std::endl;
     std::cout << "" << std::endl;
 
     int menuID = 0;
@@ -75,19 +78,25 @@ void menu()
         menu();
         break;
     }
-    default:
+
+    case 3:
     {
         std::vector<UserModel> users = loadCSV();
 
         for (UserModel user : users)
         {
             user.display();
-            std::cout << std::endl;
+            std::cout << "-------------------------------------" << std::endl;
         }
 
         waitForKey();
         menu();
         break;
     }
+    case 5:
+        exit(0);
+        break;
+    default:
+        menu();
     }
 }
