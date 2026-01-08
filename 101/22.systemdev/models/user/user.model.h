@@ -5,6 +5,7 @@
 #include <random>
 #include <sstream>
 #include <iomanip>
+#include <fstream>
 
 class UserModel
 {
@@ -28,7 +29,10 @@ public:
         password = encryptPassword(userPassword);
         id = generate_uuid_v4();
     }
-
+    UserModel(const std::string UUID, const std::string &userName, const std::string &userEmail, const std::string &userPassword)
+        : id(UUID), name(userName), email(userEmail), password(userPassword)
+    {
+    }
     std::string generate_uuid_v4()
     {
         static std::random_device rd;
@@ -68,10 +72,21 @@ public:
     std::string setEmail(std::string newEmail);
     std::string setPassword(std::string olPassword, std::string newPassword);
 
-    // validate
+    // display
+    void display()
+    {
+        std::cout << "{"
+                  << "\"id\": \"" << id << "\", "
+                  << "\"name\": \"" << name << "\", "
+                  << "\"email\": \"" << email << "\", "
+                  << "\"password\": \"" << password << "\""
+                  << "}" << std::endl;
+    }
 };
 UserModel registerUser();
 
 bool validateUser(UserModel user);
 
+bool saveUser(UserModel user);
+std::vector<UserModel> loadCSV();
 #endif

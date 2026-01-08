@@ -73,3 +73,54 @@ bool validateUser(UserModel user)
     }
     return true;
 }
+
+std::string filename = "users.csv";
+
+bool saveUser(const UserModel user)
+{
+    std::ofstream file(filename, std::ios::app);
+
+    if (!file.is_open())
+    {
+        std::cerr << "Failed to open users.txt\n";
+        return false;
+    }
+
+    file << user.getId() << ","
+         << user.getName() << ","
+         << user.getEmail() << ","
+         << user.getPassword() << "\n";
+
+    file.close();
+    return true;
+}
+std::vector<UserModel> loadCSV()
+{
+    std::vector<UserModel> users;
+
+    std::ifstream fileIn(filename);
+    if (!fileIn.is_open())
+    {
+        std::cerr << "Failed to open " << filename << "\n";
+        return users;
+    }
+
+    std::string line;
+
+    while (std::getline(fileIn, line))
+    {
+
+        std::stringstream ss(line);
+        std::string id, name, email, hash;
+
+        std::getline(ss, id, ',');
+        std::getline(ss, name, ',');
+        std::getline(ss, email, ',');
+        std::getline(ss, hash, ',');
+
+        users.push_back(UserModel(id, name, email, hash));
+    }
+
+    fileIn.close();
+    return users;
+}
