@@ -61,7 +61,17 @@ public:
     std::string getId() const;
     std::string getName() const;
     std::string getEmail() const;
+    std::string getPassword() const;
+
+    //------- Setters ----------
+    std::string setName(std::string newName);
+    std::string setEmail(std::string newEmail);
+    std::string setPassword(std::string olPassword, std::string newPassword);
+
+    // validate
 };
 UserModel registerUser();
+
+bool validateUser(UserModel user);
 
 #endif

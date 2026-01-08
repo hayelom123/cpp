@@ -11,6 +11,14 @@ int main()
 
     // 1.register user
     UserModel user = registerUser();
+
+    // validate
+    if (!validateUser(user))
+    {
+        std::cout << "Invalid user. please provide valid info.\n";
+        user = registerUser();
+    }
+
     std::cout << "\nUser Registered!\n";
     std::cout << "ID: " << user.getId() << "\n";
     std::cout << "Name: " << user.getName() << "\n";
