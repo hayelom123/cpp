@@ -1,4 +1,5 @@
 #include <iostream>
+#include "./utils/utils.h"
 #include "models/user/user.model.h"
 
 int main()
@@ -13,8 +14,10 @@ int main()
     UserModel user = registerUser();
 
     // validate
-    if (!validateUser(user))
+    while (!validateUser(user))
     {
+
+        clearScreen();
         std::cout << "Invalid user. please provide valid info.\n";
         user = registerUser();
     }
