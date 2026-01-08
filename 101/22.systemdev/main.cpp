@@ -7,4 +7,8 @@ int main()
     //  2.login
     //  3.diplay profile
     //  4.edit profile
+
+    while (true)
+    {
+    }
 }

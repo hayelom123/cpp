@@ -1,4 +1,5 @@
+#include "user.model.cpp"
 
-bool registerUser()
+UserModel registerUser()
 {
 }

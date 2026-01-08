@@ -1,3 +1,6 @@
+#ifndef USER_MODEL_H
+#define USER_MODEL_H
+
 #include <iostream>
 
 class UserModel
@@ -29,18 +32,10 @@ public:
         return newId;
     }
     // -------- Getters --------
-    std::string getId() const
-    {
-        return id;
-    }
-
-    std::string getName() const
-    {
-        return name;
-    }
-
-    std::string getEmail() const
-    {
-        return email;
-    }
+    std::string getId() const;
+    std::string getName() const;
+    std::string getEmail() const;
 };
+UserModel registerUser();
+
+#endif
