@@ -6,6 +6,7 @@
 #include <sstream>
 #include <iomanip>
 #include <fstream>
+#include <vector>
 
 class UserModel
 {
@@ -22,6 +23,7 @@ private:
     }
 
 public:
+    UserModel() = default; // ✅ ADD THIS
     UserModel(const std::string &userName, const std::string &userEmail, const std::string &userPassword)
         : name(userName), email(userEmail)
     {
@@ -89,4 +91,7 @@ bool validateUser(UserModel user);
 
 bool saveUser(UserModel user);
 std::vector<UserModel> loadCSV();
+UserModel *loginWithEmailAndPassword(std::string userEmail, std::string userPassword);
+
+void displayUsersTable(const std::vector<UserModel> &users);
 #endif

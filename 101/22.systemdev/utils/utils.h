@@ -17,8 +17,8 @@ void clearScreen()
 }
 void waitForKey()
 {
-    std::cout << "Press Enter to continue...";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cin.get();
+    std::string tmp;
+    std::cout << "\nPress Enter to continue...";
+    std::getline(std::cin, tmp);
 }
 #endif

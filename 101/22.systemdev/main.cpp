@@ -2,6 +2,7 @@
 #include "./utils/utils.h"
 #include "models/user/user.model.h"
 
+UserModel *user;
 void menu();
 int main()
 {
@@ -19,6 +20,10 @@ int main()
 void header()
 {
     std::cout << "---------------- User Management System ----------------" << std::endl;
+    if (user)
+    {
+        std::cout << "Name: " << user->getName() << " " << "Email: " << user->getEmail() << std::endl;
+    }
 }
 
 //---------------------------Menu----------------------------------
@@ -27,29 +32,69 @@ void menu()
 {
 
     clearScreen();
-    std::cout << "\033[0m"; // reset to default
 
     std::cout << "\033[" << 36 << "m";
     header();
-    std::cout << "1.Login" << std::endl;
+    std::cout << (user ? "1.Logout" : "1.Login")
+              << std::endl;
     std::cout << "2.Register" << std::endl;
     std::cout << "3.Display Users" << std::endl;
     std::cout << "4.Search User" << std::endl;
     std::cout << "5.To EXIT" << std::endl;
     std::cout << "" << std::endl;
 
+    std::string input;
     int menuID = 0;
 
     std::cout << "Choice: ";
-    std::cin >> menuID;
-
+    std::getline(std::cin, input);
+    // std::cin >> menuID;
+    menuID = std::stoi(input);
+    // Clear leftover newline
+    // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     switch (menuID)
     {
     case 1:
-        std::cout << "Login page." << std::endl;
-        //
+    {
+        // if user is logged in then logout
+        if (user)
+        {
+            user = nullptr;
+            menu();
+            break;
+        }
+        int trial = 0;
+        while (trial < 3)
+        {
+            std::cout << "Login page." << std::endl;
+            trial++;
+            std::string email, password;
 
+            std::cout << "Email: ";
+            std::getline(std::cin, email);
+
+            std::cout << "Password: ";
+            std::getline(std::cin, password);
+
+            user = loginWithEmailAndPassword(email, password);
+            if (user)
+            {
+                std::cout << "Login successful! Welcome " << user->getName() << std::endl;
+                user->display();
+
+                waitForKey();
+                break;
+            }
+            else
+            {
+                std::cout << "Login failed!\n";
+            }
+            waitForKey();
+        }
+
+        menu();
         break;
+    }
     case 2:
     {
         // 2.register user
@@ -82,12 +127,9 @@ void menu()
     case 3:
     {
         std::vector<UserModel> users = loadCSV();
-
-        for (UserModel user : users)
-        {
-            user.display();
-            std::cout << "-------------------------------------" << std::endl;
-        }
+        std::cout << "\n\n\t========================== All Users ==========================\n"
+                  << std::endl;
+        displayUsersTable(users);
 
         waitForKey();
         menu();
