@@ -59,6 +59,7 @@ void menu()
         // if user is logged in then logout
         if (user)
         {
+            delete user;
             user = nullptr;
             menu();
             break;
