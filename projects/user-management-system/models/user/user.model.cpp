@@ -1,5 +1,6 @@
 #include "user.model.h"
 
+std::string secretkey = "testkey123";
 // defntions
 std::string UserModel::getId() const
 {
@@ -147,7 +148,7 @@ UserModel *loginWithEmailAndPassword(std::string userEmail, std::string userPass
 
         // if (userEmail.compare(email) == 0)
         // std::cout << email << std::endl;
-        if (userEmail == email && password == userPassword)
+        if (userEmail == email && UserModel::hashPassword(userPassword) == password)
         {
             return new UserModel{id, name, email, password};
         }

@@ -8,6 +8,8 @@
 #include <fstream>
 #include <vector>
 
+extern std::string secretkey; // declaration only
+
 class UserModel
 {
     // id, name,email, password,
@@ -17,23 +19,28 @@ private:
     std::string email;
     std::string password;
 
-    std::string encryptPassword(std::string pass)
-    {
-        return pass;
-    }
-
 public:
     UserModel() = default; // ✅ ADD THIS
     UserModel(const std::string &userName, const std::string &userEmail, const std::string &userPassword)
         : name(userName), email(userEmail)
     {
 
-        password = encryptPassword(userPassword);
+        password = hashPassword(userPassword);
+        std::cout << "Password: " << password << std::endl;
         id = generate_uuid_v4();
     }
     UserModel(const std::string UUID, const std::string &userName, const std::string &userEmail, const std::string &userPassword)
         : id(UUID), name(userName), email(userEmail), password(userPassword)
     {
+    }
+    static std::string hashPassword(const std::string &pass)
+    {
+        uint64_t hash = 5381;
+        for (char c : pass + secretkey)
+        {
+            hash = ((hash << 5) + hash) + static_cast<unsigned char>(c);
+        }
+        return std::to_string(hash);
     }
     std::string generate_uuid_v4()
     {
@@ -94,4 +101,5 @@ std::vector<UserModel> loadCSV();
 UserModel *loginWithEmailAndPassword(std::string userEmail, std::string userPassword);
 
 void displayUsersTable(const std::vector<UserModel> &users);
+
 #endif
