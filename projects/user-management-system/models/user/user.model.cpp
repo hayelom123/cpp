@@ -1,4 +1,5 @@
 #include "user.model.h"
+#include "../../db/db.h"
 
 std::string secretkey = "testkey123";
 // defntions
@@ -42,7 +43,7 @@ UserModel registerUser()
     std::cout << "====================User Registration System====================" << std::endl;
 
     std::string name, email, password;
-    std::getchar();
+
     std::cout << "Name: ";
     std::getline(std::cin, name);
 
@@ -77,7 +78,7 @@ bool validateUser(UserModel user)
 
 std::string filename = "users.csv";
 
-bool saveUser(const UserModel user)
+bool saveUser1(const UserModel user)
 {
     std::ofstream file(filename, std::ios::app);
 
@@ -95,6 +96,7 @@ bool saveUser(const UserModel user)
     file.close();
     return true;
 }
+
 std::vector<UserModel> loadCSV()
 {
     std::vector<UserModel> users;
@@ -126,7 +128,7 @@ std::vector<UserModel> loadCSV()
     return users;
 }
 
-UserModel *loginWithEmailAndPassword(std::string userEmail, std::string userPassword)
+UserModel *loginWithEmailAndPassword1(std::string userEmail, std::string userPassword)
 {
     std::ifstream fileIn(filename);
     if (!fileIn.is_open())
@@ -200,4 +202,94 @@ void displayUsersTable(const std::vector<UserModel> &users)
               << std::string(ID_W, '-') << "+"
               << std::string(NAME_W, '-') << "+"
               << std::string(EMAIL_W, '-') << "+\n";
+}
+
+// using database================================================================
+bool saveUser(const UserModel user)
+{
+    sqlite3 *db = openDB();
+    if (!db)
+    {
+        return false;
+    }
+
+    createUsersTable();
+
+    const char *sql =
+        "INSERT INTO users (id, name, email, password) VALUES (?, ?, ?, ?);";
+
+    sqlite3_stmt *stmt;
+
+    sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
+
+    sqlite3_bind_text(stmt, 1, user.getId().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, user.getName().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 3, user.getEmail().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 4, user.getPassword().c_str(), -1, SQLITE_TRANSIENT);
+
+    bool ok = sqlite3_step(stmt) == SQLITE_DONE;
+    sqlite3_finalize(stmt);
+
+    return ok;
+}
+
+UserModel *loginWithEmailAndPassword(std::string userEmail, std::string userPassword)
+{
+
+    sqlite3 *db = openDB();
+    if (!db)
+        return nullptr;
+
+    const char *sql =
+        "SELECT id, name, email, password FROM users WHERE email = ?;";
+
+    sqlite3_stmt *stmt;
+    sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
+    sqlite3_bind_text(stmt, 1, userEmail.c_str(), -1, SQLITE_TRANSIENT);
+
+    if (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+
+        std::string dbPassword =
+            reinterpret_cast<const char *>(sqlite3_column_text(stmt, 3));
+
+        if (dbPassword == UserModel::hashPassword(userPassword))
+        {
+            UserModel *user = new UserModel(
+                reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0)),
+                reinterpret_cast<const char *>(sqlite3_column_text(stmt, 1)),
+                reinterpret_cast<const char *>(sqlite3_column_text(stmt, 2)),
+                dbPassword);
+            sqlite3_finalize(stmt);
+            sqlite3_close(db);
+            return user;
+        }
+    }
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+    return nullptr;
+}
+
+void displayUsers()
+{
+    sqlite3 *db = openDB();
+    if (!db)
+        return;
+
+    const char *sql = "SELECT id, name, email FROM users;";
+    sqlite3_stmt *stmt;
+
+    sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
+
+    while (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        std::cout << std::left
+                  << std::setw(38) << sqlite3_column_text(stmt, 0)
+                  << std::setw(20) << sqlite3_column_text(stmt, 1)
+                  << std::setw(30) << sqlite3_column_text(stmt, 2)
+                  << "\n";
+    }
+
+    sqlite3_finalize(stmt);
 }

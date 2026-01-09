@@ -121,6 +121,7 @@ void menu()
         {
             std::cerr << "Failed to register user\n";
         }
+        waitForKey();
         menu();
         break;
     }
