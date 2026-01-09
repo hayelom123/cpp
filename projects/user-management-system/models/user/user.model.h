@@ -97,9 +97,13 @@ UserModel registerUser();
 bool validateUser(UserModel user);
 
 bool saveUser(UserModel user);
+bool updateUserDb(const UserModel user);
+UserModel editUser(UserModel user);
+
 std::vector<UserModel> loadCSV();
 UserModel *loginWithEmailAndPassword(std::string userEmail, std::string userPassword);
 
 void displayUsersTable(const std::vector<UserModel> &users);
+std::vector<UserModel> displayUsers();
 
 #endif

@@ -30,7 +30,7 @@ std::string UserModel::setName(std::string newName)
 // ----------------Setters-------------
 std::string UserModel::setEmail(std::string newEmail)
 {
-
+    email = newEmail;
     return email;
 }
 std::string UserModel::setPassword(std::string olPassword, std::string newPassword)
@@ -271,25 +271,96 @@ UserModel *loginWithEmailAndPassword(std::string userEmail, std::string userPass
     return nullptr;
 }
 
-void displayUsers()
+std::vector<UserModel> displayUsers()
 {
+    std::vector<UserModel> users;
+
     sqlite3 *db = openDB();
     if (!db)
-        return;
+        return users;
 
-    const char *sql = "SELECT id, name, email FROM users;";
+    const char *sql = "SELECT id, name, email,password FROM users;";
     sqlite3_stmt *stmt;
 
     sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
 
     while (sqlite3_step(stmt) == SQLITE_ROW)
     {
-        std::cout << std::left
-                  << std::setw(38) << sqlite3_column_text(stmt, 0)
-                  << std::setw(20) << sqlite3_column_text(stmt, 1)
-                  << std::setw(30) << sqlite3_column_text(stmt, 2)
-                  << "\n";
+
+        std::string id = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0));
+        std::string name = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 1));
+        std::string email = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 2));
+        std::string password = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 3));
+
+        users.push_back(UserModel(id, name, email, password));
     }
 
     sqlite3_finalize(stmt);
+
+    return users;
+}
+
+bool updateUserDb(const UserModel user)
+{
+    sqlite3 *db = openDB();
+    if (!db)
+        return false;
+
+    const char *sql =
+        "UPDATE users SET name=?, email=?, password=? WHERE id=?;";
+
+    sqlite3_stmt *stmt;
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK)
+    {
+        std::cerr << "Prepare failed: " << sqlite3_errmsg(db) << std::endl;
+        sqlite3_close(db);
+        return false;
+    }
+
+    sqlite3_bind_text(stmt, 1, user.getName().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, user.getEmail().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 3, user.getPassword().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 4, user.getId().c_str(), -1, SQLITE_TRANSIENT);
+
+    bool ok = sqlite3_step(stmt) == SQLITE_DONE;
+
+    int changes = sqlite3_changes(db);
+    std::cout << "Rows updated: " << changes << std::endl;
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+
+    if (ok && changes > 0)
+        std::cout << "Updated successfully!!!\n";
+    else
+        std::cout << "Update failed or no matching user.\n";
+
+    return ok && changes > 0;
+}
+
+UserModel editUser(UserModel user)
+{
+    std::cout << "==================== Edit User ====================" << std::endl;
+
+    std::string name = user.getName(), email = user.getEmail(), password = user.getPassword();
+
+    std::cout << "Name [" << name << "]: ";
+    std::string input;
+    std::getline(std::cin, input);
+    if (!input.empty())
+        name = input;
+
+    std::cout << "Email [" << email << "]: ";
+    input = "";
+    std::getline(std::cin, input);
+    if (!input.empty())
+        email = input;
+
+    user.setEmail(email);
+    user.setName(name);
+
+    return user;
+
+    // return UserModel(name, email, password);
 }

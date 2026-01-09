@@ -39,7 +39,8 @@ void menu()
               << std::endl;
     std::cout << "2.Register" << std::endl;
     std::cout << "3.Display Users" << std::endl;
-    std::cout << "4.Search User" << std::endl;
+    std::cout << "4.Update User" << std::endl;
+
     std::cout << "5.To EXIT" << std::endl;
     std::cout << "" << std::endl;
 
@@ -128,10 +129,32 @@ void menu()
 
     case 3:
     {
-        std::vector<UserModel> users = loadCSV();
+        std::vector<UserModel> users = displayUsers();
         std::cout << "\n\n\t========================== All Users ==========================\n"
                   << std::endl;
         displayUsersTable(users);
+
+        waitForKey();
+        menu();
+        break;
+    }
+    case 4:
+    {
+        UserModel uUser = editUser(*user);
+        while (!validateUser(uUser))
+        {
+
+            clearScreen();
+            std::cout << "Invalid user. please provide valid info.\n";
+            uUser = editUser(*user);
+        }
+        uUser.display();
+        if (updateUserDb(uUser))
+        {
+            std::cout << "User updated successfully.\n";
+
+            user = &uUser;
+                }
 
         waitForKey();
         menu();
