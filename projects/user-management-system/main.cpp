@@ -4,6 +4,7 @@
 
 UserModel *user;
 void menu();
+void editUser(int &retFlag);
 void searchUserByEmail(int &retFlag);
 int main()
 {
@@ -141,6 +142,26 @@ void menu()
         break;
     }
     case 4:
+        int retFlag;
+        editUser(retFlag);
+        if (retFlag == 2)
+            break;
+    case 5:
+        int retFlag;
+        searchUserByEmail(retFlag);
+        if (retFlag == 2)
+            break;
+    case 6:
+        exit(0);
+        break;
+    default:
+        menu();
+    }
+}
+
+void editUser(int &retFlag)
+{
+    retFlag = 1;
     {
         UserModel uUser = editUser(*user);
         while (!validateUser(uUser))
@@ -160,18 +181,10 @@ void menu()
 
         waitForKey();
         menu();
-        break;
-    }
-    case 5:
-        int retFlag;
-        searchUserByEmail(retFlag);
-        if (retFlag == 2)
-            break;
-    case 6:
-        exit(0);
-        break;
-    default:
-        menu();
+        {
+            retFlag = 2;
+            return;
+        };
     }
 }
 
