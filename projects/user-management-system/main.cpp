@@ -4,6 +4,7 @@
 
 UserModel *user;
 void menu();
+void searchUserByEmail(int &retFlag);
 int main()
 {
     // fatures
@@ -162,6 +163,21 @@ void menu()
         break;
     }
     case 5:
+        int retFlag;
+        searchUserByEmail(retFlag);
+        if (retFlag == 2)
+            break;
+    case 6:
+        exit(0);
+        break;
+    default:
+        menu();
+    }
+}
+
+void searchUserByEmail(int &retFlag)
+{
+    retFlag = 1;
     {
         clearScreen();
         std::cout << "================== Search User By Email ==================" << std::endl;
@@ -187,12 +203,9 @@ void menu()
 
         waitForKey();
         menu();
-        break;
-    }
-    case 6:
-        exit(0);
-        break;
-    default:
-        menu();
+        {
+            retFlag = 2;
+            return;
+        };
     }
 }
