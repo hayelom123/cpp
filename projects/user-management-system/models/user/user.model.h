@@ -102,6 +102,7 @@ UserModel editUser(UserModel user);
 
 std::vector<UserModel> loadCSV();
 UserModel *loginWithEmailAndPassword(std::string userEmail, std::string userPassword);
+std::optional<UserModel> searchUserByEmail(std::string email);
 
 void displayUsersTable(const std::vector<UserModel> &users);
 std::vector<UserModel> displayUsers();

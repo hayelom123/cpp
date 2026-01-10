@@ -364,3 +364,45 @@ UserModel editUser(UserModel user)
 
     // return UserModel(name, email, password);
 }
+
+std::optional<UserModel> searchUserByEmail(std::string email)
+{
+
+    sqlite3 *db = openDB();
+    if (!db)
+        return std::nullopt;
+    const char *sql =
+        "SELECT id, name, email, password FROM users WHERE email=?;";
+    sqlite3_stmt *stmt;
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr) != SQLITE_OK)
+    {
+        std::cerr << "Prepare failed: " << sqlite3_errmsg(db) << std::endl;
+        sqlite3_close(db);
+        return std::nullopt;
+    }
+    // bind email parameter
+    sqlite3_bind_text(stmt, 1, email.c_str(), -1, SQLITE_TRANSIENT);
+
+    if (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        std::string id =
+            reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0));
+        std::string name =
+            reinterpret_cast<const char *>(sqlite3_column_text(stmt, 1));
+        std::string userEmail =
+            reinterpret_cast<const char *>(sqlite3_column_text(stmt, 2));
+        std::string password =
+            reinterpret_cast<const char *>(sqlite3_column_text(stmt, 3));
+
+        sqlite3_finalize(stmt);
+        sqlite3_close(db);
+
+        return UserModel(id, name, userEmail, password); // ✅ FOUND
+    }
+
+    // no user found
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+    return std::nullopt;
+}
