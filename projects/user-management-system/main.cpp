@@ -4,11 +4,11 @@
 
 UserModel *user;
 void menu();
-void loginMenu(int &retFlag);
+void loginMenu();
 void registerUserMenu();
-void displayAllUsers(int &retFlag);
-void editUser(int &retFlag);
-void searchUserByEmail(int &retFlag);
+void displayAllUsers();
+void editUser();
+void searchUserByEmail();
 int main()
 {
     // fatures
@@ -63,9 +63,7 @@ void menu()
     {
     case 1:
     {
-
         loginMenu();
-
         break;
     }
     case 2:
@@ -73,11 +71,9 @@ void menu()
         registerUserMenu();
         break;
     }
-
     case 3:
 
         displayAllUsers();
-
         break;
     case 4:
 
