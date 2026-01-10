@@ -4,6 +4,9 @@
 
 UserModel *user;
 void menu();
+void loginMenu(int &retFlag);
+void registerUserMenu();
+void displayAllUsers(int &retFlag);
 void editUser(int &retFlag);
 void searchUserByEmail(int &retFlag);
 int main()
@@ -60,97 +63,32 @@ void menu()
     {
     case 1:
     {
-        // if user is logged in then logout
-        if (user)
-        {
-            delete user;
-            user = nullptr;
-            menu();
-            break;
-        }
-        int trial = 0;
-        while (trial < 3)
-        {
-            std::cout << "Login page." << std::endl;
-            trial++;
-            std::string email, password;
 
-            std::cout << "Email: ";
-            std::getline(std::cin, email);
+        loginMenu();
 
-            std::cout << "Password: ";
-            std::getline(std::cin, password);
-
-            user = loginWithEmailAndPassword(email, password);
-            if (user)
-            {
-                std::cout << "Login successful! Welcome " << user->getName() << std::endl;
-                user->display();
-
-                waitForKey();
-                break;
-            }
-            else
-            {
-                std::cout << "Login failed!\n";
-            }
-            waitForKey();
-        }
-
-        menu();
         break;
     }
     case 2:
     {
-        // 2.register user
-        UserModel user = registerUser();
-
-        // validate
-        while (!validateUser(user))
-        {
-
-            clearScreen();
-            std::cout << "Invalid user. please provide valid info.\n";
-            user = registerUser();
-        }
-
-        if (saveUser(user))
-        {
-            std::cout << "\nUser Registered!\n";
-            std::cout << "ID: " << user.getId() << "\n";
-            std::cout << "Name: " << user.getName() << "\n";
-            std::cout << "Email: " << user.getEmail() << "\n";
-        }
-        else
-        {
-            std::cerr << "Failed to register user\n";
-        }
-        waitForKey();
-        menu();
+        registerUserMenu();
         break;
     }
 
     case 3:
-    {
-        std::vector<UserModel> users = displayUsers();
-        std::cout << "\n\n\t========================== All Users ==========================\n"
-                  << std::endl;
-        displayUsersTable(users);
 
-        waitForKey();
-        menu();
+        displayAllUsers();
+
         break;
-    }
     case 4:
-        int retFlag;
-        editUser(retFlag);
-        if (retFlag == 2)
-            break;
+
+        editUser();
+
+        break;
     case 5:
-        int retFlag;
-        searchUserByEmail(retFlag);
-        if (retFlag == 2)
-            break;
+
+        searchUserByEmail();
+
+        break;
     case 6:
         exit(0);
         break;
@@ -159,9 +97,92 @@ void menu()
     }
 }
 
-void editUser(int &retFlag)
+void loginMenu()
 {
-    retFlag = 1;
+
+    // if user is logged in then logout
+    if (user)
+    {
+        delete user;
+        user = nullptr;
+        menu();
+    }
+    int trial = 0;
+    while (trial < 3)
+    {
+        std::cout << "Login page." << std::endl;
+        trial++;
+        std::string email, password;
+
+        std::cout << "Email: ";
+        std::getline(std::cin, email);
+
+        std::cout << "Password: ";
+        std::getline(std::cin, password);
+
+        user = loginWithEmailAndPassword(email, password);
+        if (user)
+        {
+            std::cout << "Login successful! Welcome " << user->getName() << std::endl;
+            user->display();
+
+            waitForKey();
+            break;
+        }
+        else
+        {
+            std::cout << "Login failed!\n";
+        }
+        waitForKey();
+    }
+
+    menu();
+}
+
+void registerUserMenu()
+{
+    // 2.register user
+    UserModel user = registerUser();
+
+    // validate
+    while (!validateUser(user))
+    {
+
+        clearScreen();
+        std::cout << "Invalid user. please provide valid info.\n";
+        user = registerUser();
+    }
+
+    if (saveUser(user))
+    {
+        std::cout << "\nUser Registered!\n";
+        std::cout << "ID: " << user.getId() << "\n";
+        std::cout << "Name: " << user.getName() << "\n";
+        std::cout << "Email: " << user.getEmail() << "\n";
+    }
+    else
+    {
+        std::cerr << "Failed to register user\n";
+    }
+    waitForKey();
+    menu();
+}
+
+void displayAllUsers()
+{
+
+    std::vector<UserModel> users = displayUsers();
+    std::cout << "\n\n\t========================== All Users ==========================\n"
+              << std::endl;
+    displayUsersTable(users);
+
+    waitForKey();
+    menu();
+}
+
+void editUser()
+{
+
     {
         UserModel uUser = editUser(*user);
         while (!validateUser(uUser))
@@ -181,44 +202,34 @@ void editUser(int &retFlag)
 
         waitForKey();
         menu();
-        {
-            retFlag = 2;
-            return;
-        };
     }
 }
 
-void searchUserByEmail(int &retFlag)
+void searchUserByEmail()
 {
-    retFlag = 1;
+
+    clearScreen();
+    std::cout << "================== Search User By Email ==================" << std::endl;
+    std::string email;
+    std::cout << "Email: ";
+    std::getline(std::cin, email);
+    if (email.empty())
     {
-        clearScreen();
-        std::cout << "================== Search User By Email ==================" << std::endl;
-        std::string email;
-        std::cout << "Email: ";
-        std::getline(std::cin, email);
-        if (email.empty())
+        std::cout << "You didn't provide Email";
+    }
+    else
+    {
+        std::optional<UserModel> user = searchUserByEmail(email);
+        if (user)
         {
-            std::cout << "You didn't provide Email";
+            user->display();
         }
         else
         {
-            std::optional<UserModel> user = searchUserByEmail(email);
-            if (user)
-            {
-                user->display();
-            }
-            else
-            {
-                std::cout << "User not found\n";
-            }
+            std::cout << "User not found\n";
         }
-
-        waitForKey();
-        menu();
-        {
-            retFlag = 2;
-            return;
-        };
     }
+
+    waitForKey();
+    menu();
 }
