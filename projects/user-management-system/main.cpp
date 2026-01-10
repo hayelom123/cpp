@@ -57,6 +57,7 @@ void menu()
     std::getline(std::cin, input);
     // std::cin >> menuID;
     menuID = std::stoi(input);
+    std::cout << "\033[" << 35 << "m";
     // Clear leftover newline
     // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     switch (menuID)
