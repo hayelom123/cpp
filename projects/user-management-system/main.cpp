@@ -40,8 +40,9 @@ void menu()
     std::cout << "2.Register" << std::endl;
     std::cout << "3.Display Users" << std::endl;
     std::cout << "4.Update User" << std::endl;
+    std::cout << "5.Search User BY Email" << std::endl;
 
-    std::cout << "5.To EXIT" << std::endl;
+    std::cout << "6.To EXIT" << std::endl;
     std::cout << "" << std::endl;
 
     std::string input;
@@ -154,13 +155,41 @@ void menu()
             std::cout << "User updated successfully.\n";
 
             user = &uUser;
-                }
+        }
 
         waitForKey();
         menu();
         break;
     }
     case 5:
+    {
+        clearScreen();
+        std::cout << "================== Search User By Email ==================" << std::endl;
+        std::string email;
+        std::cout << "Email: ";
+        std::getline(std::cin, email);
+        if (email.empty())
+        {
+            std::cout << "You didn't provide Email";
+        }
+        else
+        {
+            std::optional<UserModel> user = searchUserByEmail(email);
+            if (user)
+            {
+                user->display();
+            }
+            else
+            {
+                std::cout << "User not found\n";
+            }
+        }
+
+        waitForKey();
+        menu();
+        break;
+    }
+    case 6:
         exit(0);
         break;
     default:
