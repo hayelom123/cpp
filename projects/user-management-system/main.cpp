@@ -11,11 +11,7 @@ void editUser();
 void searchUserByEmail();
 int main()
 {
-    // fatures
-    //  1. register users
-    //  2.login
-    //  3.diplay profile
-    //  4.edit profile
+
     // Clear leftover newline
     // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     menu();
