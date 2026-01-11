@@ -15,6 +15,7 @@ sqlite3 *openDB()
     return db;
 }
 
+// create users table
 bool createUsersTable()
 {
     sqlite3 *db = openDB();
