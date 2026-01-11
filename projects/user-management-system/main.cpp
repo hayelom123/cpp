@@ -16,7 +16,8 @@ int main()
     //  2.login
     //  3.diplay profile
     //  4.edit profile
-
+    // Clear leftover newline
+    // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     menu();
 }
 
@@ -28,6 +29,21 @@ void header()
     if (user)
     {
         std::cout << "Name: " << user->getName() << " " << "Email: " << user->getEmail() << std::endl;
+    }
+}
+
+int convertToInt(std::string stringNumber)
+{
+
+    try
+    {
+
+        return std::stoi(stringNumber);
+    }
+    catch (std::exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        return 0;
     }
 }
 
@@ -56,12 +72,16 @@ void menu()
     std::cout << "Choice: ";
     std::getline(std::cin, input);
     // std::cin >> menuID;
-    menuID = std::stoi(input);
+    menuID = convertToInt(input);
     std::cout << "\033[" << 35 << "m";
     // Clear leftover newline
     // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     switch (menuID)
     {
+    case 0:
+        std::cout << "Invalid choice\n";
+        menu();
+        break;
     case 1:
     {
         loginMenu();
