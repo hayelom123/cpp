@@ -4,6 +4,7 @@
 #include "qrcodegen.hpp"
 #include <vector>
 #include <string>
+#include <iostream>
 
 using namespace qrcodegen;
 
@@ -61,6 +62,7 @@ int main()
     }
 
     stbi_write_png("contact_qr.png", size, size, 3, image.data(), size * 3);
+    std::cout << "Image generate suucessfully";
 
     return 0;
 }
