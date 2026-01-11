@@ -3,7 +3,7 @@
 
 #include <sqlite3.h>
 #include <iostream>
-
+// open or create database
 sqlite3 *openDB()
 {
     sqlite3 *db;
