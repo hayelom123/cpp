@@ -148,7 +148,7 @@ void loginMenu()
         }
         else
         {
-            std::cout << "Login failed!\n";
+            std::cout << "Login failed! pleases try again\n";
         }
         waitForKey();
     }
