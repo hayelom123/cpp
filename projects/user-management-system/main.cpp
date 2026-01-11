@@ -3,12 +3,14 @@
 #include "models/user/user.model.h"
 
 UserModel *user;
+
 void menu();
 void loginMenu();
 void registerUserMenu();
 void displayAllUsers();
 void editUser();
 void searchUserByEmail();
+
 int main()
 {
 
@@ -196,26 +198,24 @@ void displayAllUsers()
 void editUser()
 {
 
+    UserModel uUser = editUser(*user);
+    while (!validateUser(uUser))
     {
-        UserModel uUser = editUser(*user);
-        while (!validateUser(uUser))
-        {
 
-            clearScreen();
-            std::cout << "Invalid user. please provide valid info.\n";
-            uUser = editUser(*user);
-        }
-        uUser.display();
-        if (updateUserDb(uUser))
-        {
-            std::cout << "User updated successfully.\n";
-
-            user = &uUser;
-        }
-
-        waitForKey();
-        menu();
+        clearScreen();
+        std::cout << "Invalid user. please provide valid info.\n";
+        uUser = editUser(*user);
     }
+    uUser.display();
+    if (updateUserDb(uUser))
+    {
+        std::cout << "User updated successfully.\n";
+
+        user = &uUser;
+    }
+
+    waitForKey();
+    menu();
 }
 
 void searchUserByEmail()
