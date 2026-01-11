@@ -62,7 +62,8 @@ int main()
     }
 
     stbi_write_png("contact_qr.png", size, size, 3, image.data(), size * 3);
-    std::cout << "Image generate suucessfully";
+    std::cout << "Image generated sucessfully!\n";
+    std::cout << "saved to ./contact_qr.png \n";
 
     return 0;
 }
