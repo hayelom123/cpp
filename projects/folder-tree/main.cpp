@@ -3,6 +3,8 @@
 #include <vector>
 
 namespace fs = std::filesystem;
+// you can make this project global by following this instruction
+// https://chatgpt.com/s/t_69655ebf83c8819192fb8df2dd83b64f
 
 void printTree(
     const fs::path &path,
