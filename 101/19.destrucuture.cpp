@@ -42,5 +42,6 @@ void callFunc()
 int main()
 {
     callFunc();
+    // onece the above function done it will call the destructure
     return 0;
 }
