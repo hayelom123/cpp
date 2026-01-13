@@ -70,7 +70,7 @@ int main()
 
     std::string password = generatePassword(length, upper, lower, digits, symbols);
 
-    std::cout << "Password: " << password << std::endl;
+    std::cout << "\n\nPassword: " << password << "\n\n";
 
     return 0;
 }
