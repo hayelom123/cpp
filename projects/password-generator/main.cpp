@@ -28,7 +28,10 @@ char getRandomCharacter()
 
 int main()
 {
+    std::cout << "=== PASSWORD GENERATOR ===\n";
+
     int length;
+
     std::cout << "Enter password length:";
     std::cin >> length;
 
