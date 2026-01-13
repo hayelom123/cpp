@@ -1,6 +1,5 @@
 #include <iostream>
-#include <cstdlib> // Required for rand() and srand()
-#include <ctime>   // Required for time()
+#include <random>
 
 std::string uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 std::string lowercase = "abcdefghijklmnopqrstuvwxyz";
@@ -16,18 +15,14 @@ std::string possiblePasswords = lowercase + uppercase + numbers + special;
 
 char getRandomCharacter()
 {
-
-    // seed random number ganerator using the current time
-    // This ensures a different sequence of numbers each time the program runs
-
-    // srand(): Seeds the pseudo-random number generator. It should be called once at the beginning of the program.
-
-    // std::srand(static_cast<unsigned int>(std::time(nullptr)));
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
-
     int length = possiblePasswords.length();
-    int randomIndex = (std::rand() % 10) + 1;
-    // rand() % length + 0;
+
+    std::random_device rd;
+    std::mt19937 engine(rd());
+    std::uniform_int_distribution<int> dist(0, length);
+
+    int randomIndex = dist(engine);
+    // (rand() % length) + 0;
     std::cout << "RandomIndex: " << randomIndex << std::endl;
 
     return possiblePasswords[randomIndex];
