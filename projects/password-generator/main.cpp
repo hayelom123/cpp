@@ -2,6 +2,9 @@
 
 int main()
 {
-    std::cout << "Password genarator!!!\n";
+    int length;
+    std::cout << "Enter password length:";
+    std::cin >> length;
+
     return 0;
 }
