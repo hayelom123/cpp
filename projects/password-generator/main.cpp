@@ -22,8 +22,6 @@ char getRandomCharacter()
     std::uniform_int_distribution<int> dist(0, length);
 
     int randomIndex = dist(engine);
-    // (rand() % length) + 0;
-    std::cout << "RandomIndex: " << randomIndex << std::endl;
 
     return possiblePasswords[randomIndex];
 }
