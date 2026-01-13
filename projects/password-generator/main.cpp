@@ -17,8 +17,17 @@ std::string possiblePasswords = lowercase + uppercase + numbers + special;
 char getRandomCharacter()
 {
 
+    // seed random number ganerator using the current time
+    // This ensures a different sequence of numbers each time the program runs
+
+    // srand(): Seeds the pseudo-random number generator. It should be called once at the beginning of the program.
+
+    // std::srand(static_cast<unsigned int>(std::time(nullptr)));
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
     int length = possiblePasswords.length();
-    int randomIndex = std::rand() % length;
+    int randomIndex = (std::rand() % 10) + 1;
+    // rand() % length + 0;
     std::cout << "RandomIndex: " << randomIndex << std::endl;
 
     return possiblePasswords[randomIndex];
