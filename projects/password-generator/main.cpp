@@ -51,6 +51,22 @@ void yesOrNo(std::string title, bool *val)
     std::cin >> choice;
     *val = (choice == 'y' || choice == 'Y');
 }
+
+void copyToClipboard(const std::string &text)
+{
+#ifdef _WIN32
+    std::string command = "echo " + text + " | clip";
+#elif __APPLE__
+    std::string command = "echo \"" + text + "\" | pbcopy";
+#elif __linux__
+    std::string command = "echo \"" + text + "\" | xclip -selection clipboard";
+#else
+    std::cout << "Clipboard not supported on this OS.\n";
+    return;
+#endif
+
+    system(command.c_str());
+}
 int main()
 {
     std::cout << "\n\n=== PASSWORD GENERATOR ===\n\n";
@@ -71,6 +87,8 @@ int main()
     std::string password = generatePassword(length, upper, lower, digits, symbols);
 
     std::cout << "\n\nPassword: " << password << "\n\n";
+    copyToClipboard(password);
+    std::cout << "Password copied to clipboard!\n";
 
     return 0;
 }
