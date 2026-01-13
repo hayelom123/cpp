@@ -6,11 +6,6 @@ std::string lowercase = "abcdefghijklmnopqrstuvwxyz";
 std::string numbers = "0123456789";
 std::string special = "!@#$%^&*()_+-=[]{}|;:,.<>?";
 
-int validatePasswordLength(int length)
-{
-    return 0;
-}
-
 std::string possiblePasswords = lowercase + uppercase + numbers + special;
 
 char getRandomCharacter()
@@ -28,14 +23,14 @@ char getRandomCharacter()
 
 int main()
 {
-    std::cout << "=== PASSWORD GENERATOR ===\n";
+    std::cout << "\n\n=== PASSWORD GENERATOR ===\n\n";
 
     int length;
 
     std::cout << "Enter password length:";
     std::cin >> length;
 
-    std::cout << "Password Length: " << length << std::endl;
+    // std::cout << "Password Length: " << length << std::endl;
 
     std::string password = "";
 
