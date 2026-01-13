@@ -15,6 +15,7 @@ std::string generatePassword(int length, bool upper = true, bool lower = true, b
 
 {
     std::cout << "Password Length: " << length << std::endl;
+    std::cout << "Uppercase: " << upper << " Lowercase: " << lower << " Numbers: " << digits << " Symbols: " << symbols << std::endl;
 
     std::string uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     std::string lowercase = "abcdefghijklmnopqrstuvwxyz";
@@ -29,7 +30,7 @@ std::string generatePassword(int length, bool upper = true, bool lower = true, b
     if (digits)
         possiblePasswords += numbers;
     if (symbols)
-        possiblePasswords += symbols;
+        possiblePasswords += special;
 
     int max = possiblePasswords.length();
 
@@ -43,6 +44,13 @@ std::string generatePassword(int length, bool upper = true, bool lower = true, b
     return password;
 }
 
+void yesOrNo(std::string title, bool *val)
+{
+    std::cout << title;
+    char choice;
+    std::cin >> choice;
+    *val = (choice == 'y' || choice == 'Y');
+}
 int main()
 {
     std::cout << "\n\n=== PASSWORD GENERATOR ===\n\n";
@@ -52,9 +60,15 @@ int main()
     std::cout << "Enter password length:";
     std::cin >> length;
 
-    // std::cout << "Password Length: " << length << std::endl;
+    bool upper = true, lower = true, digits = true, symbols = true;
 
-    std::string password = generatePassword(length);
+    // std::cout << "Password Length: " << length << std::endl;
+    yesOrNo("Include Uppercase letters? (y/n): ", &upper);
+    yesOrNo("Include Lowercase letters? (y/n): ", &lower);
+    yesOrNo("Include Numbers? (y/n): ", &digits);
+    yesOrNo("Include Symbols? (y/n): ", &symbols);
+
+    std::string password = generatePassword(length, upper, lower, digits, symbols);
 
     std::cout << "Password: " << password << std::endl;
 
